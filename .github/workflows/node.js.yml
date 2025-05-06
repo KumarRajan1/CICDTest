@@ -1,32 +1,62 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Node.js CI
+name: Sync, Build, and Deploy Docusaurus
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+    
+  workflow_dispatch:  # allows manual trigger
 
 jobs:
-  build:
-
+  build-and-deploy:
     runs-on: self-hosted
 
     strategy:
       matrix:
         node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm i   
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm start
+      - name: Checkout repo with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Pull latest submodule changes
+        run: |
+          git submodule update --remote --merge
+          git config --global user.name "GitHub Bot"
+          git config --global user.email "bot@example.com"
+          git add .
+          git commit -m "Auto-update submodule content" || echo "No changes to commit"
+          git push || echo "Nothing to push"
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check for changes in docs/blog/src
+        id: changes
+        run: |
+          git fetch origin main
+          CHANGED_FILES=$(git diff --name-only origin/main...HEAD | grep -E '^(docs/|blog/|src/)' || true)
+          echo "changed_files=$CHANGED_FILES" >> $GITHUB_OUTPUT
+
+      - name: Skip build if no relevant changes
+        if: steps.changes.outputs.changed_files == ''
+        run: echo "No docs/blog/src changes detected. Skipping build and deploy." && exit 0
+
+      - name: Build site
+        run: npm run build --if-present
+
+      - name: Deploy to GitHub Pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
