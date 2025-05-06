@@ -1,5 +1,5 @@
 ---
-id: Mappls-Web-Plugins
+id: Mappls
 title: Mappls Web Plugins
 
 
