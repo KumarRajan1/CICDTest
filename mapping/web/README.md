@@ -14,7 +14,6 @@ Our APIs, SDKs, and live updating map data available for [238 nations](https://g
 
 This page will be continually enhanced to offer more insights and reference material on how to best utilize our Vector Maps JS SDK for Web.
 
-You can get your api key to be used in this document here: [https://apis.mappls.com/console/](https://apis.mappls.com/console/)
 
  
 ## Introduction   testing   by  rajan .................
