@@ -61,9 +61,9 @@ const config = {
     //   },
     // ],
   ],
-  // customFields: {
-  //   buildTimestamp: Date.now(),
-  // },
+  customFields: {
+    buildTimestamp: Date.now(),
+  },
 
   themeConfig: {
      /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
