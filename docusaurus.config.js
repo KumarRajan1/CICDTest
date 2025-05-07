@@ -17,7 +17,7 @@ const config = {
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'/* , 'hi' */],
+    locales: ['en'],
   },
 
   presets: [
@@ -61,9 +61,9 @@ const config = {
     //   },
     // ],
   ],
-  customFields: {
-    buildTimestamp: Date.now(),
-  },
+  // customFields: {
+  //   buildTimestamp: Date.now(),
+  // },
 
   themeConfig: {
      /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
