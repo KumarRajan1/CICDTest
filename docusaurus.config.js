@@ -33,24 +33,24 @@ const config = {
   ],
 
   plugins: [
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'mapping',
-        path: 'mapping',
-        routeBasePath: 'mapping',
-        sidebarPath: require.resolve('./sidebars.js'),
-      },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'analytics',
-        path: 'analytics',
-        routeBasePath: 'analytics',
-        sidebarPath: require.resolve('./sidebars.js'),
-      },
-    ],
+    // [
+    //   '@docusaurus/plugin-content-docs',
+    //   {
+    //     id: 'mapping',
+    //     path: 'mapping',
+    //     routeBasePath: 'mapping',
+    //     sidebarPath: require.resolve('./sidebars.js'),
+    //   },
+    // ],
+    // [
+    //   '@docusaurus/plugin-content-docs',
+    //   {
+    //     id: 'analytics',
+    //     path: 'analytics',
+    //     routeBasePath: 'analytics',
+    //     sidebarPath: require.resolve('./sidebars.js'),
+    //   },
+    // ],
     // [
     //   '@docusaurus/plugin-content-docs',
     //   {
