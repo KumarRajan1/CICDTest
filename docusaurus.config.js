@@ -81,6 +81,9 @@ const config = {
         },
       ],
     },
+    customFields: {
+      buildTimestamp: Date.now(),
+    },
     footer: {
       style: 'dark',
       links: [
