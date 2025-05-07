@@ -1,0 +1,22 @@
+{
+  "title": {
+    "message": "My Site",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Site Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Mapping": {
+    "message": "Mapping",
+    "description": "Navbar item with label Mapping"
+  },
+  "item.label.Analytics": {
+    "message": "Analytics",
+    "description": "Navbar item with label Analytics"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}
