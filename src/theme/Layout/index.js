@@ -8,6 +8,8 @@ export default function LayoutWrapper(props) {
   } = useDocusaurusContext();
 
   const buildTimestamp = customFields?.buildTimestamp;
+  console.log('[Debug] buildTimestamp:', buildTimestamp);
+
 
   useEffect(() => {
     if (!buildTimestamp) {
