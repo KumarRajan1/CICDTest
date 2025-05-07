@@ -17,7 +17,7 @@ const config = {
 
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en'/* , 'hi' */],
   },
 
   presets: [
@@ -93,7 +93,7 @@ const config = {
           ],
         },
       ],
-      copyright: `© ${new Date().getFullYear()} My Site`,
+      copyright: `© ${new Date().getFullYear()}`,
     },
     prism: {
       theme: prismThemes.github,
