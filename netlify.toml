@@ -1,0 +1,25 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+# Force all routes to index.html (for SPAs like Docusaurus)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Force latest assets to be fetched (disable caching)
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "no-store"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-store"
