@@ -19,7 +19,6 @@ sidebar_position: 9
  
 
  
-### [InfoWindow Properties](#InfoWindow-Properties)
 
 **Required Parameters**
 

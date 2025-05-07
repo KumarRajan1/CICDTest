@@ -15,7 +15,7 @@ title: mGIS Widgets
 sidebar_position:  2
 ---
  
- 
+ ## rajan ................
 ## Introduction ##
 
 mGIS Widget wrapper includes many out-of-the-box widgets.These widgets provide standard functions to easily create GIS web portals. 
