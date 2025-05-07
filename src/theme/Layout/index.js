@@ -10,7 +10,6 @@ export default function LayoutWrapper(props) {
   const buildTimestamp = customFields?.buildTimestamp;
   console.log('[Debug] buildTimestamp:', buildTimestamp);
 
-
   useEffect(() => {
     if (!buildTimestamp) {
       console.warn('No buildTimestamp found in customFields');
@@ -22,7 +21,7 @@ export default function LayoutWrapper(props) {
     if (stored && stored !== buildTimestamp.toString()) {
       console.log('[Auto Reload] New build detected. Reloading...');
       localStorage.setItem('buildTimestamp', buildTimestamp);
-      window.location.reload(true);
+      window.location.reload(); // ✅ correct version
     } else {
       localStorage.setItem('buildTimestamp', buildTimestamp);
     }
