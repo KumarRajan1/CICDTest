@@ -61,6 +61,9 @@ const config = {
     //   },
     // ],
   ],
+  customFields: {
+    buildTimestamp: Date.now(),
+  },
 
   themeConfig: {
      /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -80,9 +83,6 @@ const config = {
           position: 'right',
         },
       ],
-    },
-    customFields: {
-      buildTimestamp: Date.now(),
     },
     footer: {
       style: 'dark',
