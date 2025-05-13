@@ -1,4 +1,4 @@
-[build]
-  command = "cd my-docusaurus-site && npm run build"  # Change to the correct directory before running npm build
-  publish = "my-docusaurus-site/build"  # Specify where the built site is located after the build
-  environment = { NODE_ENV = "production" }
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache"
