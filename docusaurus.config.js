@@ -8,10 +8,10 @@ const config = {
   title: 'My Site',
   tagline: 'Dinosaurs are cool',
   favicon: 'img/favicon.ico',
-  url: 'https://your-site.netlify.app',
+  url: 'https://developer-rajan.netlify.app/',
   baseUrl: '/',
-  organizationName: 'my-org',
-  projectName: 'my-docusaurus-site',
+  organizationName: 'KumarRajan1',
+  projectName: 'ci integration',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
