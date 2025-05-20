@@ -10,7 +10,6 @@ BASE_DIR="$(pwd)"
 # List of folder paths to check
 PATHS=(
   "mapping/web"
-  "search/web"
 )
 
 for BASE_PATH in "${PATHS[@]}"; do
