@@ -13,8 +13,6 @@ image: https://about.mappls.com/images/mappls-og.png
 slug: /info-windows
 title: Info Windows
 sidebar_position: 9
-
----
  
 
  
