@@ -3,9 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "docusaurus": "docusaurus",
+    "fetch-docs": "./scripts/fetch-docs.sh",
     "start": "docusaurus start",
-    "build": "docusaurus build",
+    "docusaurus": "docusaurus",
+    "build": "npm run fetch-docs && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
