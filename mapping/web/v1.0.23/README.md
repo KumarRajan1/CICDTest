@@ -12,7 +12,7 @@ This plugin allows you to plot:
 
 ---
 
-## 📦 Add the Dependency
+##  Add the Dependency
 
 Add the following dependency in your **app-level `build.gradle`** file:
 
