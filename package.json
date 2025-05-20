@@ -3,10 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "fetch-docs": "./scripts/fetch-docs.sh",
-    "start": "docusaurus start",
     "docusaurus": "docusaurus",
-    "build": "bash scripts/fetch-docs.sh && docusaurus build",
+    "start": "docusaurus start",
+    "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
