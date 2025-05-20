@@ -1,3 +1,9 @@
-[build]
-  command = "bash scripts/fetch-docs.sh && npm run build"
-  publish = "build"
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache"
