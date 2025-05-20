@@ -8,7 +8,7 @@ This plugin allows you to plot:
 - **Symbols** (markers)
 - **Lines**
 - **Fills** (polygons)
-- **Circles**
+
 
 ---
 
