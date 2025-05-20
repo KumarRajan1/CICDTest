@@ -66,23 +66,7 @@ lineManager = new LineManager(mapView, mapplsMap, style); // For Polyline
 ~~~
 
 ### Initialize CircleManager (Circle)
-##### Java
-~~~java
- circleManager = new CircleManager(mapView, mapplsMap, style); //For Cirle
-~~~
-##### Kotlin
-~~~kotlin
- circleManager = CircleManager(mapView, mapplsMap, style); //For Cirle
-~~~
 
-## Add Annotations
-### Add a Marker (Symbol)
-Use `SymbolOptions` to add the marker:
-##### Java
-~~~java
-//Add Custom Image
-style.addImage("map-marker-image", bitmap);
- 
  // Create a symbol at the specified location.
 SymbolOptions symbolOptions = new SymbolOptions()
 	.position(latLng)
