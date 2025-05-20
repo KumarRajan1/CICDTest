@@ -6,7 +6,7 @@
     "fetch-docs": "./scripts/fetch-docs.sh",
     "start": "docusaurus start",
     "docusaurus": "docusaurus",
-    "build": "npm run fetch-docs && docusaurus build",
+    "build": "bash scripts/fetch-docs.sh && docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
