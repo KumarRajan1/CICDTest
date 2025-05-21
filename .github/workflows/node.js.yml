@@ -1,119 +1,18 @@
-name: Fetch, Build & Deploy Docs
+name: Deploy on Self-hosted Runner
 
 on:
   push:
     branches:
       - main
-  schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
 
 jobs:
-  fetch-build-deploy:
-    runs-on: ubuntu-latest
-
+  deploy:
+    runs-on: self-hosted
     steps:
-      - name: Checkout Repo
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Install JQ and Curl
-        run: sudo apt-get install -y jq
-
-      - name: Cache Node Modules
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.npm
-            node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Fetch & Update Docs
+      - name: Run deployment script
         run: |
-          GITHUB_ORG="KumarRajan1"
-          REPO="CICDTest"
-          BRANCH="main"
-          RAW_BASE="https://raw.githubusercontent.com/$GITHUB_ORG/$REPO/$BRANCH"
-          API_BASE="https://api.github.com/repos/$GITHUB_ORG/$REPO/contents"
-          BASE_DIR="$(pwd)"
-
-          PATHS=("mapping/web" "search/web")
-          mkdir -p .cache
-          CACHE_FILE=".cache/sha-cache.json"
-          [ -f "$CACHE_FILE" ] || echo "{}" > "$CACHE_FILE"
-          CACHE=$(cat "$CACHE_FILE")
-          UPDATED_CACHE="{"
-          CHANGED=false
-
-          for BASE_PATH in "${PATHS[@]}"; do
-            echo "🔍 Checking $BASE_PATH"
-            RESPONSE=$(curl -s "$API_BASE/$BASE_PATH")
-            VERSION_INFOS=$(echo "$RESPONSE" | jq -c '.[] | select(.type == "dir") | select(.name | startswith("v")) | {name, sha}')
-            LATEST_VERSION=$(echo "$VERSION_INFOS" | jq -r '.name' | sort -V | tail -n1)
-
-            for LOCAL_DIR in "$BASE_DIR/$BASE_PATH"/v*/; do
-              DIR_NAME=$(basename "$LOCAL_DIR")
-              if [[ "$DIR_NAME" != "$LATEST_VERSION" ]]; then
-                echo "🗑️ Removing old version: $LOCAL_DIR"
-                rm -rf "$LOCAL_DIR"
-                CHANGED=true
-              fi
-            done
-
-            echo "$VERSION_INFOS" | while IFS= read -r entry; do
-              VERSION=$(echo "$entry" | jq -r '.name')
-              SHA=$(echo "$entry" | jq -r '.sha')
-              KEY="${BASE_PATH//\//-}-$VERSION"
-              LOCAL_FILE="$BASE_DIR/$BASE_PATH/$VERSION/README.md"
-              RAW_URL="$RAW_BASE/$BASE_PATH/$VERSION/README.md"
-
-              CACHED_SHA=$(echo "$CACHE" | jq -r --arg k "$KEY" '.[$k] // empty')
-              if [[ "$SHA" != "$CACHED_SHA" || ! -f "$LOCAL_FILE" ]]; then
-                echo "📥 Updating $VERSION"
-                mkdir -p "$BASE_DIR/$BASE_PATH/$VERSION"
-                curl -s -o "$LOCAL_FILE" "$RAW_URL"
-                if ! grep -q '^---' "$LOCAL_FILE"; then
-                  TMP_FILE="${LOCAL_FILE}.tmp"
-                  echo -e "---\nid: ${BASE_PATH//\//-}-${VERSION}\ntitle: ${BASE_PATH##*/} ${VERSION} Docs\n---\n" > "$TMP_FILE"
-                  cat "$LOCAL_FILE" >> "$TMP_FILE"
-                  mv "$TMP_FILE" "$LOCAL_FILE"
-                fi
-                CHANGED=true
-              fi
-              UPDATED_CACHE+="\"$KEY\":\"$SHA\","
-            done
-          done
-
-          UPDATED_CACHE="${UPDATED_CACHE%,}}"
-          echo "$UPDATED_CACHE" | jq . > "$CACHE_FILE"
-          echo "CHANGED=$CHANGED" >> $GITHUB_ENV
-
-      - name: Commit if Changed
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          if git diff --cached --quiet; then
-            echo "✅ No changes to commit"
-          else
-            git commit -m "🔄 Auto-update latest docs"
-            git push
-          fi
-
-      - name: Build Site
-        if: env.CHANGED == 'true'
-        run: npm run build
-
-      - name: Deploy to GitHub Pages
-        if: env.CHANGED == 'true'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          echo "Deploying app..."
+          ./deploy.sh
