@@ -5,6 +5,7 @@
   "scripts": {
     "fetch-docs": "./scripts/fetch-docs.sh",
     "start": "docusaurus start",
+    "test": "jest",
     "docusaurus": "docusaurus",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
