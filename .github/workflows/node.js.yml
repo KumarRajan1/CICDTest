@@ -40,11 +40,10 @@ jobs:
         fi
 
     - name: Build site
-      if: steps.changes.outputs.skip_build == 'false'
       run: npm run build --if-present
 
     - name: Start app
-      run: npm start &
+      run: npm run serve &
 
     - name: Wait and check app
       run: |
