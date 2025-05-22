@@ -14,7 +14,7 @@ PATHS=(
 )
 
 for BASE_PATH in "${PATHS[@]}"; do
-  echo "📦 Checking versions for: $BASE_PATH"
+  echo " Checking versions for: $BASE_PATH"
 
   # Get version directories from GitHub
   VERSION_DIRS=$(curl -s "$API_BASE/$BASE_PATH" | jq -r '.[] | select(.type=="dir") | .name' | grep '^v' | sort -V)
