@@ -5,14 +5,8 @@
   "scripts": {
     "fetch-docs": "./scripts/fetch-docs.sh",
     "start": "docusaurus start",
-<<<<<<< HEAD
     "docusaurus": "docusaurus",
     "build": "bash scripts/fetch-docs.sh && docusaurus build",
-=======
-    "test": "jest",
-    "docusaurus": "docusaurus",
-    "build": "docusaurus build",
->>>>>>> c6dd083fd94dd49ca484c41be92aeaf0edafba2b
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
@@ -32,9 +26,7 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "3.7.0",
-    "@docusaurus/types": "3.7.0",
-    "jest": "^29.7.0",
-    "serve": "^14.2.4"
+    "@docusaurus/types": "3.7.0"
   },
   "browserslist": {
     "production": [
