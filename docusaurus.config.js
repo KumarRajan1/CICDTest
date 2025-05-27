@@ -55,7 +55,7 @@ const config = {
       '@docusaurus/plugin-content-docs',
       {
         id: 'mappls-ios-sdk',
-        path: 'mappls-ios-sdk/docs/v1.0.1',  // relative to your Docusaurus root folder
+        path: 'mappls-ios-sdk',  // relative to your Docusaurus root folder
         routeBasePath: 'mappls-ios-sdk',    // URL prefix to access these docs
         sidebarPath: require.resolve('./sidebars.js'),
       },
