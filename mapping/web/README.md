@@ -3,13 +3,13 @@
 </a>
 
 # Mappls Web Plugins
-## Rajan ...
 
 Mappls Web plugins is a JavaScript library for interactive maps provided by Mappls. This library is compatible with both our Web SDKs - Vector Maps & our legacy Raster Maps.
 
 `MAPPLS` will be there in every step of the way, building new tools that help you navigate, explore and get things done, wherever you are and users can touch or interact with map features clearly overlaid on your view of the world.
 
-Our APIs, SDKs, and live updating map data available for [200+ nations and territories](https://github.com/MapmyIndia/mapmyindia-rest-api/blob/master/docs/countryISO.md) give developer-friendly, easy-to-integrate plugins to add capabilities like intelligent search and routes on map, to your web or mobile applications.
+Our APIs, SDKs, and live updating map data available for [200+ nations and territories](https://github.com/MapmyIndia/mapmyindia-rest-api/blob/master/docs/countryISO.md) give developer-friendly, easy-to-integrate plugins to add capabilities like intelligent
+search and routes on map, to your web or mobile applications.
 
 You can get your api key to be used in this document here: [https://apis.mappls.com/console/](https://apis.mappls.com/console/)
 
@@ -88,18 +88,19 @@ A simple plugin / widget to render details of a particular place. The Place Deta
 
 ---
 
-For any queries and support, please contact:
-
+For any queries and support, please contact:  
 <a href="https://about.mappls.com/api/">
   <img src="https://about.mappls.com/images/mappls-logo.svg" height="40" />
-</a>
-
+</a>  
 Email us at [apisupport@mappls.com](mailto:apisupport@mappls.com)
+
+---
 
 <a href="https://about.mappls.com/contact/">
   <img src="https://www.mapmyindia.com/api/img/icons/support.png" />
-  Support
-</a>
+</a>  
+[Support](https://about.mappls.com/contact/)  
+Need support? contact us!
 
 ---
 
@@ -133,9 +134,7 @@ Email us at [apisupport@mappls.com](mailto:apisupport@mappls.com)
   </a>
 </p>
 
-<div align="center">
-  © Copyright 2022 CE Info Systems Ltd. All Rights Reserved.
-</div>
+<div align="center">@ Copyright 2022 CE Info Systems Ltd. All Rights Reserved.</div>
 
 <div align="center">
   <a href="https://about.mappls.com/api/terms-&-conditions">Terms & Conditions</a> |
