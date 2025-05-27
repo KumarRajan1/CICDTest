@@ -85,7 +85,7 @@ const config = {
       items: [
         { to: 'mapping/web', label: 'Mapping', position: 'left' },
           { to: 'analytics/mgis-widgets', label: 'Analytics', position: 'left' },
-          { to: 'mappls-ios-sdk/docs/v1.0.1', label: 'mappls-ios-sdk', position: 'left' },
+          { to: 'mappls-ios-sdk', label: 'mappls-ios-sdk', position: 'left' },
           // { to: 'telematics/get-your-key', label: 'Telematics', position: 'left' },
         {
           href: 'https://github.com/my-org/my-docusaurus-site',
