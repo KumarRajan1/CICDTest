@@ -51,6 +51,15 @@ const config = {
         sidebarPath: require.resolve('./sidebars.js'),
       },
     ],
+    [
+      '@docusaurus/plugin-content-docs',
+      {
+        id: 'mappls-ios-sdk',
+        path: 'mappls-ios-sdk/docs/v1.0.1',  // relative to your Docusaurus root folder
+        routeBasePath: 'mappls-ios-sdk',    // URL prefix to access these docs
+        sidebarPath: require.resolve('./sidebars.js'),
+      },
+    ],    
     // [
     //   '@docusaurus/plugin-content-docs',
     //   {
@@ -76,6 +85,7 @@ const config = {
       items: [
         { to: 'mapping/web', label: 'Mapping', position: 'left' },
           { to: 'analytics/mgis-widgets', label: 'Analytics', position: 'left' },
+          { to: 'mappls-ios-sdk/docs/v1.0.1', label: 'mappls-ios-sdk', position: 'left' },
           // { to: 'telematics/get-your-key', label: 'Telematics', position: 'left' },
         {
           href: 'https://github.com/my-org/my-docusaurus-site',
