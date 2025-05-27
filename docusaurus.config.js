@@ -11,7 +11,7 @@ const config = {
   url: 'https://developer-rajan.netlify.app/',
   baseUrl: '/',
   organizationName: 'KumarRajan1',
-  projectName: 'ci integration',
+  projectName: 'docs',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
