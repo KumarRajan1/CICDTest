@@ -24,13 +24,14 @@ const config = {
     [
       'classic',
       {
-        blog: false,
-        theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+        docs: {
+          routeBasePath: '/', // URL prefix (change to '/' to use docs at root)
+          sidebarPath: require.resolve('./sidebars.js'),
         },
       },
     ],
   ],
+  
 
   plugins: [
     [
@@ -40,17 +41,18 @@ const config = {
         path: 'mapping',
         routeBasePath: 'mapping',
         sidebarPath: require.resolve('./sidebars.js'),
+        include: ['**/*.md'],
       },
     ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'analytics',
-        path: 'analytics',
-        routeBasePath: 'analytics',
-        sidebarPath: require.resolve('./sidebars.js'),
-      },
-    ],
+    // [
+    //   '@docusaurus/plugin-content-docs',
+    //   {
+    //     id: 'analytics',
+    //     path: 'analytics',
+    //     routeBasePath: 'analytics',
+    //     sidebarPath: require.resolve('./sidebars.js'),
+    //   },
+    // ],
     // [
     //   '@docusaurus/plugin-content-docs',
     //   {
@@ -72,10 +74,11 @@ const config = {
       logo: {
         alt: 'Site Logo',
         src: 'img/logo.svg',
+        href: '/docs1',
       },
       items: [
         { to: 'mapping/web', label: 'Mapping', position: 'left' },
-          { to: 'analytics/mgis-widgets', label: 'Analytics', position: 'left' },
+          // { to: 'analytics/mgis-widgets', label: 'Analytics', position: 'left' },
           // { to: 'telematics/get-your-key', label: 'Telematics', position: 'left' },
         {
           href: 'https://github.com/my-org/my-docusaurus-site',
@@ -91,7 +94,7 @@ const config = {
           title: 'Docs',
           items: [
             { label: 'Mapping', to: 'mapping/web' },
-            { label: 'Analytics', to: 'analytics/mgis-widgets' },
+            // { label: 'Analytics', to: 'analytics/mgis-widgets' },
             // { label: 'Telematics', to: '/telematics' },
           ],
         },

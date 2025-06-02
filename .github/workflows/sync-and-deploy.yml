@@ -1,0 +1,47 @@
+name: Sync and Deploy Docusaurus
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+  schedule:
+    - cron: '*/30 * * * *'
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Docusaurus site
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Clone external repos
+        run: |
+          git clone https://github.com/KumarRajan1/docs.git external/docs
+          git clone https://github.com/KumarRajan1/test.git external/test
+
+      - name: Sync specific files
+        run: |
+          cp external/docs/MAP.md docs/MAP.md
+          rm -rf static/android
+          mkdir -p static/android
+          cp -r external/test/android/* static/android/
+
+      - name: Build Docusaurus
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
