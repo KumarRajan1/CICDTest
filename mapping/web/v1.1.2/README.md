@@ -12,4 +12,4 @@ Powered with India's most comprehensive and robust mapping functionalities.
 
 4. Explore through [200+ countries & territories](https://github.com/MapmyIndia/mapmyindia-rest-api/blob/master/docs/countryISO.md) with **Global Search, Routing and Mapping APIs & SDKs** by Mappls.
 
-## [Documentation History]()
+
