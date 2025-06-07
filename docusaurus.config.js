@@ -40,6 +40,7 @@ const config = {
         path: 'mapping',
         routeBasePath: 'mapping',
         sidebarPath: require.resolve('./sidebars.js'),
+        // disableVersioning: true,
       },
     ],
     [
