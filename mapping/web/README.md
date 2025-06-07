@@ -87,6 +87,8 @@ A simple plugin / widget to render details of a particular place. The Place Deta
 <img src="https://about.mappls.com/api/api_doc_assets/place_detail.JPG" />
 
 ---
+## new side heading 
+---
 
 For any queries and support, please contact:  
 <a href="https://about.mappls.com/api/">
