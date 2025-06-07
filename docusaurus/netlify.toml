@@ -1,6 +1,4 @@
-[build]
-  command = "npm run build"  # Navigate to the correct directory
-  publish = "build"  # Specify the correct build output directory
-
-[context.production.environment]
-  NODE_ENV = "production"
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "no-cache"
