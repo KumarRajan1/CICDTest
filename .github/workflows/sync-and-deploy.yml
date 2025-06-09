@@ -30,9 +30,13 @@ jobs:
           git clone https://github.com/KumarRajan1/docs.git external/docs
           git clone https://github.com/KumarRajan1/test.git external/test
 
-      - name: Sync specific files
+      - name: Sync all .md files from external/docs
         run: |
-          cp external/docs/MAP.md docs/MAP.md
+          mkdir -p docs
+          find external/docs -type f -name "*.md" -exec cp --parents {} docs/ \;
+
+      - name: Sync android folder from external/test
+        run: |
           rm -rf static/android
           mkdir -p static/android
           cp -r external/test/android/* static/android/
