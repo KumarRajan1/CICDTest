@@ -30,6 +30,14 @@ jobs:
           git clone https://github.com/KumarRajan1/docs.git external/docs
           git clone https://github.com/KumarRajan1/test.git external/test
 
+      - name: Debug folder structure
+        run: |
+          echo "📂 Contents of external/docs:"
+          ls -R external/docs || echo "No docs found"
+
+          echo "📂 Contents of external/test:"
+          ls -R external/test || echo "No test repo found"
+
       - name: Sync all .md files from external/docs
         run: |
           mkdir -p docs
@@ -37,9 +45,14 @@ jobs:
 
       - name: Sync android folder from external/test
         run: |
-          rm -rf static/android
-          mkdir -p static/android
-          cp -r external/test/android/* static/android/
+          if [ -d "external/test/android" ]; then
+            echo "📁 Copying android folder..."
+            rm -rf static/android
+            mkdir -p static/android
+            cp -r external/test/android/* static/android/
+          else
+            echo "⚠️ 'external/test/android/' folder not found — skipping copy."
+          fi
 
       - name: Build Docusaurus
         run: npm run build
