@@ -4,10 +4,12 @@ set -e
 
 REPOS_FILE="repos.txt"
 DEST_DIR="docs"
-DOCUSAURUS_DIR="../my-docusaurus-site"
+DOCUSAURUS_DIR="../my-docusaurus-site/docs"
 
 mkdir -p "$DEST_DIR"
 cd "$DEST_DIR" || exit 1
+
+changes_detected=false
 
 while read -r line; do
     [[ -z "$line" || "$line" == \#* ]] && continue
@@ -20,32 +22,72 @@ while read -r line; do
         folder=$(basename "$repo" .git)
     fi
 
-    if [ -d "$folder" ]; then
-        echo "🔄 Updating $folder"
+    echo "🔍 Processing $folder"
+
+    if [ -d "$folder/.git" ]; then
         cd "$folder"
-        git pull origin main || git pull
+        echo "   ⏳ Checking for remote updates..."
+        git remote update > /dev/null
+
+        LOCAL=$(git rev-parse @)
+        REMOTE=$(git rev-parse @{u})
+        BASE=$(git merge-base @ @{u})
+
+        if [ "$LOCAL" = "$REMOTE" ]; then
+            echo "   ✅ Up to date — no pull needed"
+        elif [ "$LOCAL" = "$BASE" ]; then
+            echo "   🔄 Pulling updates..."
+            git pull
+            changes_detected=true
+        else
+            echo "   ⚠️ Diverged — skipping for safety"
+        fi
+
         cd ..
+
     else
         echo "⬇️ Cloning $repo into $folder"
         git clone "$repo" "$folder"
+        changes_detected=true
     fi
 done < "../$REPOS_FILE"
 
-echo "📁 Syncing all files to Docusaurus site..."
+# Sync .md files only if changes were detected
+if $changes_detected; then
+    echo "📁 Syncing .md files to Docusaurus..."
 
-# Clear previous contents (optional)
-rm -rf "$DOCUSAURUS_DIR/docs/*"
-rm -rf "$DOCUSAURUS_DIR/static/android"
+    # Clear old docs
+    rm -rf "$DOCUSAURUS_DIR"/*
+    
+    for repo_dir in */; do
+        [ -d "$repo_dir/.git" ] || continue
 
-# Example: Sync content from specific folders
-# Customize this section based on actual folders in your cloned repos
-if [ -d "docs" ]; then
-    cp -r docs/* "$DOCUSAURUS_DIR/docs/"
+        echo "   ➕ Copying from $repo_dir"
+        find "$repo_dir" -type f -name "*.md" | while read -r file; do
+            cp --parents "$file" "$DOCUSAURUS_DIR"
+        done
+    done
+
+    echo "✅ Docs sync completed."
+else
+    echo "🛑 No repo updates — skipping docs sync."
 fi
 
-if [ -d "test/android" ]; then
-    mkdir -p "$DOCUSAURUS_DIR/static/android"
-    cp -r test/android/* "$DOCUSAURUS_DIR/static/android/"
-fi
+# 🔄 Push changes back if any .md file was modified locally
+echo "📤 Checking for local changes in repos to push back..."
 
-echo "✅ All files synced."
+for repo_dir in */; do
+    [ -d "$repo_dir/.git" ] || continue
+    cd "$repo_dir"
+
+    if ! git diff --quiet || ! git diff --cached --quiet; then
+        echo "   🚀 Committing and pushing changes in $repo_dir"
+        git add -u
+        git commit -m "docs: sync updated .md files from Docusaurus"
+        git push origin HEAD
+    else
+        echo "   ✅ No local .md changes to commit in $repo_dir"
+    fi
+
+    cd ..
+done

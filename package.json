@@ -5,7 +5,7 @@
   "scripts": {
     "fetch-docs": "bash scripts/fetch-docs.sh",
     "start": "docusaurus start",
-    "build": "npm run fetch-docs && docusaurus build",
+    "build": "npm run docusaurus build",
     "dev": "npm run fetch-docs && docusaurus start",
     "deploy": "docusaurus deploy",
     "serve": "docusaurus serve",
