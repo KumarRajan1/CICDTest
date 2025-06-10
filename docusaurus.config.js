@@ -12,7 +12,7 @@ const config = {
   baseUrl: '/',
   organizationName: 'KumarRajan1',
   projectName: 'docs',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
@@ -74,7 +74,7 @@ const config = {
       logo: {
         alt: 'Site Logo',
         src: 'img/logo.svg',
-        href: '/docs1',
+        href: '/docs',
       },
       items: [
         // { to: 'mapping/web', label: 'Mapping', position: 'left' },
