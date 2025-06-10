@@ -74,7 +74,7 @@ const config = {
       logo: {
         alt: 'Site Logo',
         src: 'img/logo.svg',
-        href: '/docs',
+        href: '/docs1',
       },
       items: [
         // { to: 'mapping/web', label: 'Mapping', position: 'left' },
