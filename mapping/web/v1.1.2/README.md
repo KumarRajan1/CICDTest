@@ -1,3 +1,0 @@
-
-
-# Mappls Map Android SDK

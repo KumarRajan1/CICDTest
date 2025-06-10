@@ -34,16 +34,16 @@ const config = {
   
 
   plugins: [
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'mapping',
-        path: 'mapping',
-        routeBasePath: 'mapping',
-        sidebarPath: require.resolve('./sidebars.js'),
-        include: ['**/*.md'],
-      },
-    ],
+    // [
+    //   '@docusaurus/plugin-content-docs',
+    //   {
+    //     id: 'mapping',
+    //     path: 'mapping',
+    //     routeBasePath: 'mapping',
+    //     sidebarPath: require.resolve('./sidebars.js'),
+    //     include: ['**/*.md'],
+    //   },
+    // ],
     // [
     //   '@docusaurus/plugin-content-docs',
     //   {
@@ -77,7 +77,7 @@ const config = {
         href: '/docs1',
       },
       items: [
-        { to: 'mapping/web', label: 'Mapping', position: 'left' },
+        // { to: 'mapping/web', label: 'Mapping', position: 'left' },
           // { to: 'analytics/mgis-widgets', label: 'Analytics', position: 'left' },
           // { to: 'telematics/get-your-key', label: 'Telematics', position: 'left' },
         {
@@ -93,7 +93,7 @@ const config = {
         {
           title: 'Docs',
           items: [
-            { label: 'Mapping', to: 'mapping/web' },
+            // { label: 'Mapping', to: 'mapping/web' },
             // { label: 'Analytics', to: 'analytics/mgis-widgets' },
             // { label: 'Telematics', to: '/telematics' },
           ],

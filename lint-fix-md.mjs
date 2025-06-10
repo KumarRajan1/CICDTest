@@ -39,15 +39,15 @@ if (files.length === 0) {
 
 for (const file of files) {
   try {
-    const content = fs.readFileSync(file, 'utf8');
-    const $ = cheerio.load(content, { decodeEntities: false });
+    const original = fs.readFileSync(file, 'utf8');
+    const $ = cheerio.load(original, { decodeEntities: false });
 
-    // Remove <p> wrapping around <img>
+    // ✅ Remove <p> wrappers around <img>
     $('p img').each(function () {
       $(this).parent().replaceWith($(this));
     });
 
-    // Convert <a><img></a> to markdown link with image (preserving alt text)
+    // ✅ Convert <a><img></a> to Markdown image links
     $('a').each(function () {
       const img = $(this).find('img');
       if (img.length === 1 && $(this).contents().length === 1) {
@@ -58,31 +58,51 @@ for (const file of files) {
       }
     });
 
-    // Convert remaining <img> to markdown images (preserving alt text)
+    // ✅ Convert standalone <img> tags to Markdown
     $('img').each(function () {
       const src = $(this).attr('src');
       const alt = $(this).attr('alt') || '';
       $(this).replaceWith(`![${alt}](${src})`);
     });
 
-    // Replace <br> with newline
+    // ✅ Replace <br> with newlines
     $('br').replaceWith('\n');
 
-    // Remove all <p> tags but keep content
+    // ✅ Remove <p> tags, preserve content
     $('p').each(function () {
       $(this).replaceWith($(this).html());
     });
 
-    // Get the HTML content as a string
+    // ✅ Extract and clean plain content
     let output = $.root().html();
-
-    // Clean up any remaining HTML tags just in case (should be none)
     output = output
-      .replace(/<\/?[^>]+(>|$)/g, '')  // remove any remaining HTML tags
-      .replace(/\n{3,}/g, '\n\n')      // collapse multiple blank lines
+      .replace(/<\/?[^>]+(>|$)/g, '')        // Strip any HTML tags
+      .replace(/\n{3,}/g, '\n\n')            // Collapse multiple blank lines
       .trim();
 
-    fs.writeFileSync(file, output, 'utf8');
+      const lines = output.split('\n');
+      const fixedLines = [];
+      let openBraceCount = 0;
+      
+      lines.forEach((line, i) => {
+        const openBraces = (line.match(/{/g) || []).length;
+        const closeBraces = (line.match(/}/g) || []).length;
+        openBraceCount += openBraces - closeBraces;
+      
+        // Fix broken markdown links
+        line = line.replace(/\[[^\]]*]\(\s*\)/g, match => `<!-- Broken link: ${match} -->`);
+      
+        // If braces are unbalanced or line ends in open `{`, comment the line
+        if (openBraceCount > 0 || line.trim().endsWith('{')) {
+          line = `<!-- ⚠️ Unclosed { expression possibly causing MDX crash on line ${i + 1} -->\n<!-- ${line.trim()} -->`;
+          openBraceCount = 0; // reset to avoid cascading errors
+        }
+      
+        fixedLines.push(line);
+      });
+      
+
+    fs.writeFileSync(file, fixedLines.join('\n'), 'utf8');
     console.log(`✅ Cleaned: ${path.relative(__dirname, file)}`);
   } catch (err) {
     console.error(`❌ Error cleaning ${file}:`, err.message);
