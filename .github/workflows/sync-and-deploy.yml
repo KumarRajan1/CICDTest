@@ -1,88 +1,83 @@
-name: Sync and Deploy Docusaurus
+# name: Sync and Deploy Docusaurus
 
-on:
-  workflow_dispatch:
-  repository_dispatch:
-    types: [external-repo-updated]
-  schedule:
-    - cron: '*/30 * * * *'
-  push:
-    branches:
-      - main
+# on:
+#   workflow_dispatch:
+#   repository_dispatch:
+#     types: [external-repo-updated]
+#   schedule:
+#     - cron: '*/30 * * * *'
+#   push:
+#     branches:
+#       - main
 
-jobs:
-  sync-deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   sync-deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Docusaurus site
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+#     steps:
+#       - name: Checkout Docusaurus site
+#         uses: actions/checkout@v3
+#         with:
+#           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
-      - name: Run commit_all.sh before continuing
-        run: |
-          chmod +x ./commit_all.sh
-          ./commit_all.sh "Updated UI and bug fixes"
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
+#       - name: Install dependencies
+#         run: npm ci
 
-      - name: Install dependencies
-        run: npm ci
+#       - name: Clone external repos
+#         run: |
+#           git clone https://github.com/KumarRajan1/docs.git external/docs1
+#           git clone https://github.com/KumarRajan1/test.git external/test
 
-      - name: Clone external repos
-        run: |
-          git clone https://github.com/KumarRajan1/docs.git external/docs1
-          git clone https://github.com/KumarRajan1/test.git external/test
+#       - name: Debug folder structure
+#         run: |
+#           echo "📂 Contents of external/docs1:"
+#           ls -R external/docs1 || echo "No docs1 found"
 
-      - name: Debug folder structure
-        run: |
-          echo "📂 Contents of external/docs1:"
-          ls -R external/docs1 || echo "No docs1 found"
+#           echo "📂 Contents of external/test:"
+#           ls -R external/test || echo "No test repo found"
 
-          echo "📂 Contents of external/test:"
-          ls -R external/test || echo "No test repo found"
+#       - name: Sync all .md files from external/docs1
+#         run: |
+#           mkdir -p docs
+#           find external/docs1 -type f -name "*.md" -exec cp --parents {} docs/ \;
 
-      - name: Sync all .md files from external/docs1
-        run: |
-          mkdir -p docs
-          find external/docs1 -type f -name "*.md" -exec cp --parents {} docs/ \;
+#       - name: Sync android folder from external/test
+#         run: |
+#           if [ -d "external/test/android" ]; then
+#             echo "📁 Copying android folder..."
+#             rm -rf static/android
+#             mkdir -p static/android
+#             cp -r external/test/android/* static/android/
+#           else
+#             echo "⚠️ 'external/test/android/' folder not found — skipping copy."
+#           fi
 
-      - name: Sync android folder from external/test
-        run: |
-          if [ -d "external/test/android" ]; then
-            echo "📁 Copying android folder..."
-            rm -rf static/android
-            mkdir -p static/android
-            cp -r external/test/android/* static/android/
-          else
-            echo "⚠️ 'external/test/android/' folder not found — skipping copy."
-          fi
-
-      - name: Check for changes and commit
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+#       - name: Check for changes and commit
+#         run: |
+#           git config --local user.email "action@github.com"
+#           git config --local user.name "GitHub Action"
           
-          if git diff --quiet && git diff --staged --quiet; then
-            echo "No changes detected"
-            echo "CHANGES_DETECTED=false" >> $GITHUB_ENV
-          else
-            echo "Changes detected, committing..."
-            git add .
-            git commit -m "Auto-sync: Update from external repositories $(date '+%Y-%m-%d %H:%M:%S')"
-            git push
-            echo "CHANGES_DETECTED=true" >> $GITHUB_ENV
-          fi
+#           if git diff --quiet && git diff --staged --quiet; then
+#             echo "No changes detected"
+#             echo "CHANGES_DETECTED=false" >> $GITHUB_ENV
+#           else
+#             echo "Changes detected, committing..."
+#             git add .
+#             git commit -m "Auto-sync: Update from external repositories $(date '+%Y-%m-%d %H:%M:%S')"
+#             git push
+#             echo "CHANGES_DETECTED=true" >> $GITHUB_ENV
+#           fi
 
-      - name: Build Docusaurus
-        run: npm run build
+#       - name: Build Docusaurus
+#         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+#       - name: Deploy to GitHub Pages
+#         uses: peaceiris/actions-gh-pages@v3
+#         with:
+#           github_token: ${{ secrets.GITHUB_TOKEN }}
+#           publish_dir: ./build
