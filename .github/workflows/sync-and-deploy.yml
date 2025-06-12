@@ -20,6 +20,11 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 
+      - name: Run commit_all.sh before continuing
+        run: |
+          chmod +x ./commit_all.sh
+          ./commit_all.sh "Updated UI and bug fixes"
+
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
